@@ -1,6 +1,6 @@
 import React from "react";
 import "./styles/About.css";
-import Pannel from '../../public/images/Pannel7.webp'
+import Pannel from '../../public/images/pannel7.webp'
 
 function About() {
     return (
