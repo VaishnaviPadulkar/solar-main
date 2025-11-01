@@ -13,10 +13,22 @@ const AdminDash = () => {
     const [showUserModal, setShowUserModal] = useState(false);
     const [deleteConfirm, setDeleteConfirm] = useState(null);
     const [actionLoading, setActionLoading] = useState(false);
+    const [calculations, setCalculations] = useState([]);
+
 
     useEffect(() => {
         fetchUsers();
+        fetchCalculations();
     }, []);
+
+    const fetchCalculations = async () => {
+        try {
+            const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/calculate`);
+            setCalculations(res.data);
+        } catch (error) {
+            console.error("Error fetching calculations:", error);
+        }
+    };
 
     const fetchUsers = async () => {
         try {
@@ -256,6 +268,50 @@ const AdminDash = () => {
                     )}
                 </div>
             </div>
+
+            {/* Calculations Table */}
+            <div className="row mt-5">
+                <div className="col-12">
+                    <h4 className="fw-bold text-dark mb-3">Recent Solar Calculations</h4>
+                    <div className="modern-table">
+                        <div className="table-responsive">
+                            <table className="table table-hover mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>Usage (kWh)</th>
+                                        <th>Tariff (₹)</th>
+                                        <th>Sunlight (hrs/day)</th>
+                                        <th>Efficiency (%)</th>
+                                        <th>Savings (₹)</th>
+                                        <th>Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {calculations.length > 0 ? (
+                                        calculations.map(calc => (
+                                            <tr key={calc._id}>
+                                                <td>{calc.usage}</td>
+                                                <td>{calc.tariff}</td>
+                                                <td>{calc.sunlight}</td>
+                                                <td>{calc.efficiency}</td>
+                                                <td className="fw-bold text-success">{calc.savings}</td>
+                                                <td>{new Date(calc.createdAt).toLocaleDateString()}</td>
+                                            </tr>
+                                        ))
+                                    ) : (
+                                        <tr>
+                                            <td colSpan="6" className="text-center text-muted py-4">
+                                                No calculations found.
+                                            </td>
+                                        </tr>
+                                    )}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
 
             {/* User Details Modal */}
             {showUserModal && selectedUser && (

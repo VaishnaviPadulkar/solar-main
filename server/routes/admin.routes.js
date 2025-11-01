@@ -4,6 +4,7 @@ import { deleteUser, getAllUsers, loginAdmin, registerAdmin } from "../controlle
 
 const router = express.Router();
 
+
 // Admin registration
 router.post("/register", registerAdmin);
 
@@ -11,7 +12,7 @@ router.post("/register", registerAdmin);
 router.post("/login", loginAdmin);
 
 // Protected routes
-router.get("/users", adminAuth, getAllUsers);
-router.delete("/users/:id", adminAuth, deleteUser);
+router.get("/admin/users", adminAuth, getAllUsers);
+router.delete("/admin/users/:id", adminAuth, deleteUser);
 
 export default router;
