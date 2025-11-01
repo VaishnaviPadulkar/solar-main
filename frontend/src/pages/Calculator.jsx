@@ -342,7 +342,7 @@ const Calculator = () => {
                                             {isProcessingPDF && (
                                                 <div className="processing-overlay">
                                                     <div className="spinner-border spinner-border-sm text-primary me-2"></div>
-                                                    Processing PDF and Calculating Savings...
+                                                    Processing PDF and Calculating Savings please wait...
                                                 </div>
                                             )}
                                         </div>
