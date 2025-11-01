@@ -11,6 +11,7 @@ export const submitContact = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 };
+
 export const getAllContacts = async (req, res) => {
     try {
         const contacts = await Contact.find();

@@ -1,37 +1,27 @@
 import express from "express";
-import Calculation from "../models/Calculate.js";
+import {
+    getCalculations,
+    deleteCalculation,
+    getCalculationStats,
+    calBill,
+} from "../controllers/calculationController.js";
+// import { testPDFProcessing } from "../controllers/pdfController.js";
 
 const router = express.Router();
 
-// POST /api/calculate
-router.post("/", async (req, res) => {
-    try {
-        const { usage, tariff, sunlight, efficiency } = req.body;
 
-        if (!usage || !tariff || !sunlight || !efficiency) {
-            return res.status(400).json({ message: "All fields are required" });
-        }
 
-        // Calculation formula
-        const monthly = usage * tariff * 30;
-        const savings = (monthly * (efficiency / 100)) / sunlight;
+// GET /api/calculate/test-pdf - Test PDF processing
+router.post("/process-pdf-calculate", calBill);
+// router.get("/test-pdf", testPDFProcessing);
 
-        // Save to database
-        const calc = new Calculation({
-            usage,
-            tariff,
-            sunlight,
-            efficiency,
-            savings: savings.toFixed(2),
-        });
+// GET /api/calculate - Get all calculations
+router.get("/", getCalculations);
 
-        await calc.save();
+// GET /api/calculate/stats - Get calculation statistics
+router.get("/stats", getCalculationStats);
 
-        res.json({ savings: savings.toFixed(2) });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: "Server error" });
-    }
-});
+// DELETE /api/calculate/:id - Delete calculation
+router.delete("/:id", deleteCalculation);
 
 export default router;
