@@ -13,6 +13,7 @@ import AdminRegister from './admin/AdminRegister';
 import Gallery from './pages/Gallary';
 import Contact from './pages/Contact';
 import './admin/styles/AdminStyles.css';
+import Dashboard from './pages/Dashboard';
 
 function App() {
   const location = useLocation();
@@ -26,6 +27,7 @@ function App() {
         {/* Public routes */}
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
+        <Route path="/dashboard" element={<Dashboard />} />
         <Route path='/gallary' element={<Gallery />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/calculator" element={<Calculator />} />
